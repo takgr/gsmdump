@@ -1,0 +1,13 @@
+iptables -N udp_out
+iptables -D udp_out
+iptables -A udp_out
+iptables -D OUTPUT --protocol udp --dport 4729 -j udp_out
+iptables -A OUTPUT --protocol udp --dport 4729 -j udp_out
+sleep 5
+packets_out=$(iptables -nvL udp_out | awk '/all/{print $1}')
+echo $packets_out
+if [[ $packets_out -eq $zero ]]; then
+  echo "Restarting GSM service";
+  systemctl restart rc-gsm;
+  exit;
+fi
