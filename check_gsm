@@ -1,3 +1,4 @@
+#!/bin/bash
 iptables -N udp_out
 iptables -D udp_out
 iptables -A udp_out
